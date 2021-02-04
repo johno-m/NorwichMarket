@@ -13,22 +13,23 @@ export const store = new Vuex.Store({
         stalls: {
             index: null,
             info: null
-        }
+        },
+        types: ['food', 'clothing', 'produce', 'service', 'shop']
     },
     getters: {
         user(state){
             return state.user
         },
-        stalls(state){
+        stalls(state, test){
             return state.stalls
         }
     },
     mutations: {
         SET_LOGGED_IN(state, value) {
-            state.user.USER_LOGGED_IN = value;
+            state.user.USER_LOGGED_IN = value
         },
         SET_STALLS(state, value) {
-            state.stalls = value;
+            state.stalls = value
         }
     },
     actions: {

@@ -1,11 +1,5 @@
 <template>
     <div v-if="stallInfo">
-        <div id="header"><h1>Norwich<br>Market</h1></div>
-            <div id="filter-row">
-                <router-link :to="'/list/'+filter" v-for="(filter, key) in filterTypes" :key="key">
-                    <button class="filter" :class="filter == selectedFilter ? 'active' : ''" >{{ filter }}</button>
-                </router-link>
-            </div>
         <transition-group name="fade" mode="out-in">
             <app-stall-preview v-for="(stall, key) in listOfVisibleStalls" :stall="stall" :name="key" :key="key"></app-stall-preview>
         </transition-group>

@@ -383,7 +383,6 @@ export default {
     margin-bottom: 30px;
 }
 
-
 .stall-spot {
     width: 65px;
     height: 50px;
@@ -394,10 +393,6 @@ export default {
     line-height: 50px;
     font-size: 1.6em;
 }
-
-
-
-
 
 .market-top-group {
     display: flex;

@@ -10,8 +10,13 @@
                     <div class="desc">
                         {{index}}
                     </div>
-                    <div class="matches">
-                        <p><b>Tags:</b> <span v-for="(match, key) in stall.matches" :key="`match-${key}`">{{match}}</span></p>
+                    <div class="matches row">
+                        <b>Tags:</b> 
+                        <ul class="row">
+                            <li v-for="(match, key) in stall.matches" :key="`match-${key}`">
+                                {{match}}
+                            </li>
+                        </ul>
                     </div>
                 </main>
             </div>
@@ -43,6 +48,10 @@ export default {
 
 /* Similar Section */
 
+li {
+    margin: 0px 6px;
+}
+
 .similar-wrapper {
     display: flex;
     flex-direction: row;
@@ -66,6 +75,7 @@ export default {
 .matches {
     font-size: 0.8rem;
     text-transform: capitalize;
+    padding: 10px 0px;
 }
 
 main {

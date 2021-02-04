@@ -3,35 +3,30 @@ body {
     padding: 0px;
     margin: 0px;
     color: #242525;
-    }
+    -webkit-font-smoothing: antialiased;
+}
+
+* {
+    box-sizing: border-box;
+}
 
 #app {
     position: relative;
     width: 100%;
-    padding: 20px;
     min-height: 100vh;
 }
 
-.shop { 
-    background: rgb(8,212,157);
-    background: -moz-linear-gradient(90deg, rgba(8,212,157,1) 0%, rgba(18,142,184,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(8,212,157,1) 0%, rgba(18,142,184,1) 100%);
-    background: linear-gradient(90deg, rgba(8,212,157,1) 0%, rgba(18,142,184,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#08d49d",endColorstr="#128eb8",GradientType=1);
-}
-
-.food {
-    transition: 1s;
-    background: rgb(244,184,64);
-    background: -moz-linear-gradient(90deg, rgba(244,184,64,1) 0%, rgba(50,208,196,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(244,184,64,1) 0%, rgba(50,208,196,1) 100%);
-    background: linear-gradient(90deg, rgba(244,184,64,1) 0%, rgba(50,208,196,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f4b840",endColorstr="#32d0c4",GradientType=1);
-}
-
+/* Class added to all main Router View divs */
 .view {
-    width: 1000px;
+    width: 100%;
     margin: 0px auto;
+    padding: 0 30px;
+}
+
+@media screen and (max-width: 1780px){
+    .view { 
+        max-width: 1500px;
+    }
 }
 
 .row {
