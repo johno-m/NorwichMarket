@@ -2,20 +2,49 @@
 
 <template>
     <section class="stall-map-wrapper" v-if="stallInfo">
+        <a name="map"></a>
         <h2>Where is the stall?</h2>
-        <div class="stall-scroll-area" ref="maparea">
-            <div class="stall-map" v-if="stallInfo">
-                <div class="box" 
-                    v-for="(stallNum, index) in main_stalls" 
-                    :key="index" 
-                    :class="className(stallNum, index)" 
-                    :id="stallIndex[stallNum]" 
-                    :selected="(stallIndex[stallNum] === selectedStall) ? 'active' : null" 
-                    :ref="(stallIndex[stallNum] === selectedStall) ? 'selected' : null" >
-                    <div class="contents" >
-                        {{stallNum}}
+        <div class="row">
+            <MapSidebar />
+            <div class="stall-scroll-area" ref="maparea">
+                <div class="stall-map-top">
+                    <div class="col">
+                        <div class="stall block produce" :ref="(stallIndex[2] === selectedStall) ? 'selected' : null"><div class="contents">2 & 3</div></div>
+                        <div class="stall block" :ref="(stallIndex[4] === selectedStall) ? 'selected' : null" ><div class="contents">4 & 5</div></div>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <div class="stall tall shop" :ref="(stallIndex[6] === selectedStall) ? 'selected' : null" ><div class="contents">6</div></div>
+                        <div class="stall tall shop" :ref="(stallIndex[7] === selectedStall) ? 'selected' : null" ><div class="contents">7</div></div>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <div class="stall large food" :ref="(stallIndex[191] === selectedStall) ? 'selected' : null" ><div class="contents">Sir Garnet</div></div>
+                        <div class="stall long shop" :ref="(stallIndex[188] === selectedStall) ? 'selected' : null" ><div class="contents">188</div></div>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <div class="stall block food" :ref="(stallIndex[192] === selectedStall) ? 'selected' : null" ><div class="contents">Brick</div></div>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <div class="stall block clothing" :ref="(stallIndex[193] === selectedStall) ? 'selected' : null" ><div class="contents">Anderson</div></div>
                     </div>
                 </div>
+                <div class="stall-map" v-if="stallInfo">
+                    <div class="box" 
+                        v-for="(stallNum, index) in main_stalls" 
+                        :key="index" 
+                        :class="className(stallNum, index)" 
+                        :id="stallIndex[stallNum]" 
+                        :selected="(stallIndex[stallNum] === selectedStall) ? 'active' : null" 
+                        :ref="(stallIndex[stallNum] === selectedStall) ? 'selected' : null" >
+                        <div class="contents" >
+                            {{stallNum}}
+                        </div>
+                    </div>
+                </div>
+                <MapLocationIndicator />
             </div>
         </div>
     </section>
@@ -24,6 +53,8 @@
 </template>
 
 <script>
+import MapSidebar from './MapSidebar'
+import MapLocationIndicator from './MapLocationIndicator'
 
 export default {
     props: ['stalls', 'selectedStall'],
@@ -141,7 +172,9 @@ export default {
             }
         },
         refreshScroll(){
-            if(this.$refs.selected[0] && this.$refs.maparea){
+            console.log('hello')
+            console.log(this.$refs.selected)
+            if(this.$refs.selected && this.$refs.maparea){
                 const scrollTo = this.$refs.selected[0].offsetTop - this.$refs.maparea.offsetTop - 250 + (this.$refs.selected[0].clientHeight / 2)
                 this.$refs.maparea.scrollTop = scrollTo
             }
@@ -152,6 +185,10 @@ export default {
     },
     mounted(){
         this.refreshScroll()
+    },
+    components: {
+        MapSidebar,
+        MapLocationIndicator
     }
     
 }
@@ -168,8 +205,15 @@ h2 {
 }
 
 .stall-scroll-area {
+    position: relative;
     overflow-y: scroll;
+    min-width: 600px;
+    flex: 1;
     height: 500px;
+}
+
+.map-pointer {
+
 }
 
 .box {
@@ -218,8 +262,9 @@ h2 {
 }
 
 .stall {
+    position: relative;
     padding-bottom: 100%;
-    background: #f5f5f5;
+    background: #ebebeb;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -232,28 +277,28 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 1.6rem;
+    font-weight: 400;
+    font-size: 1.5rem;
 }
 
 .food {
-    background: #dfabb7;
+    background: #ed466e;
 }
 
 .shop {
-    background: #e6d0a5;
+    background: #F4B840;
 }
 
 .produce {
-    background: #92e2cd;
+    background: #08d49d;
 }
 
 .clothing {
-    background: #93bcca;
+    background: #128eb8;
 }
 
 .service {
-    background: #94d3cd;
+    background: #009688;
 }
 
 .selected-food {
@@ -284,6 +329,8 @@ h2 {
     grid-template-rows: 2fr 2fr 1fr 2fr 2fr 1fr 2fr 2fr 1fr 2fr 2fr 1fr 2fr 2fr 1fr 2fr 2fr 1fr 2fr 2fr 1fr 2fr 2fr 1fr 2fr 2fr;
 }
 
+
+
 #stall-overlay {
     width: 0px;
     height: 0px;
@@ -292,66 +339,6 @@ h2 {
     position: absolute;
     top: 0;
     left: 0;
-}
-
-.market-row {
-    display: flex;
-    flex-direction: row;
-}
-
-.market-row .stall-spot:nth-child(even) {
-  margin-right: 30px;
-}
-
-.market-row .stall-spot:last-child {
-  margin-right: 1px;
-}
-
-.market-col {
-    margin-bottom: 30px;
-}
-
-
-.stall-spot {
-    width: 65px;
-    height: 50px;
-    margin: 3px;
-    background-color: #f5f5f5;
-    color: #ffffff80;
-    text-align: center;
-    line-height: 50px;
-    font-size: 1.6em;
-}
-
-
-
-
-
-.market-top-group {
-    display: flex;
-    flex-direction: row;
-}
-
-.sir-garnet-stalls {
-    width: 215px;
-    height: 50px;
-    margin: 3px;
-    background-color: #f5f5f5;
-    color: #ffffff80;
-    text-align: center;
-    line-height: 50px;
-    font-size: 1.6em;
-}
-
-.sir-garnet {
-    width: 215px;
-    height: 100px;
-    background-color: #f5f5f5;
-    color: #ffffff80;
-    text-align: center;
-    line-height: 50px;
-    font-size: 1.6em;
-    margin: 3px;
 }
 
 .market-top-col {
@@ -372,18 +359,6 @@ h2 {
     color: red!important;
 }
 
-.large {
-    width: 133px;
-    height: 106px;
-    background-color: #f5f5f5;
-    color: #ffffff80;
-    text-align: center;
-    line-height: 50px;
-    font-size: 1.6em;
-    transition: 1s;
-    margin: 3px;
-}
-
 .mb {
     margin-bottom: 30px;
 }
@@ -392,14 +367,38 @@ h2 {
     margin-right: 27px;
 }
 
-.tall {
-    height: 65px;
-    width: 50px;
-    margin-top: 6px;
+.col {
+    justify-content: flex-end;
 }
 
-.narrow {
-    width: 56px;
+/* Map Top Stalls */
+
+.stall-map-top {
+    max-width: 700px;
+    margin: 0 auto 25px auto;
+    display: grid;
+    grid-template-columns: 4fr 1fr 2fr 1fr 6fr 1fr 4fr 1fr 4fr;
+}
+
+.stall-map-top .stall {
+    border: 6px solid white;
+    margin: -3px;
+}
+
+.tall {
+    padding-bottom: 110%;
+}
+
+.block {
+    padding-bottom: 80%;
+}
+
+.large {
+    padding-bottom: 60%;
+}
+
+.long {
+    padding-bottom: 33.333%;
 }
 
 </style>

@@ -7,7 +7,7 @@
         </div>
         <div class="results" v-if="matches.length > 0">
             <h3>Matching Tags:</h3>
-            <ul><li v-for="(tag, index) in matches">{{tag}}</li></ul>
+            <ul><li v-for="(tag, index) in matches" :key="index">{{tag}}</li></ul>
         </div>
     </div>
 </template>
